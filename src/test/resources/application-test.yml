@@ -1,0 +1,29 @@
+spring:
+  docker:
+    compose:
+      enabled: false
+
+  datasource:
+    url: jdbc:h2:mem:cloudparking;MODE=MySQL;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+cloud-parking:
+  grid:
+    total-spots: 6
+  vehicle-lookup:
+    provider: mock
+    apibrasil:
+      base-url: https://gateway.apibrasil.io
+      device-token: ""
+      bearer-token: ""

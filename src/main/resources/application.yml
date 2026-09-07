@@ -1,0 +1,49 @@
+spring:
+  profiles:
+    active: dev
+
+  threads:
+    virtual:
+      enabled: true
+
+  docker:
+    compose:
+      lifecycle-management: start-only
+
+  datasource:
+    url: jdbc:mysql://localhost:3307/cloud_parking_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Sao_Paulo
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  data:
+    redis:
+      host: localhost
+      port: 6380
+
+cloud-parking:
+  grid:
+    total-spots: 20
+  vehicle-lookup:
+    provider: mock
+    apibrasil:
+      base-url: https://gateway.apibrasil.io
+      device-token: ""
+      bearer-token: ""
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/cloud-parking

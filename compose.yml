@@ -1,0 +1,25 @@
+services:
+
+  database:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: cloud_parking_db
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - cloud_parking_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6380:6379"
+
+volumes:
+  cloud_parking_data:
